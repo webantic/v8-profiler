@@ -79,9 +79,9 @@ namespace nodex {
     profile->Set(Nan::New<String>("head").ToLocalChecked(),      head);
 
 #if (NODE_MODULE_VERSION > 0x000B)
-    Local<Value> start_time = NanNew<Number>((double)node->GetStartTime()/1000000.00);
-    Local<Value> end_time = NanNew<Number>((double)node->GetEndTime()/1000000.00);
-    Local<Array> samples = NanNew<Array>();
+    Local<Value> start_time = Nan::New<Number>((double)node->GetStartTime()/1000000.00);
+    Local<Value> end_time = Nan::New<Number>((double)node->GetEndTime()/1000000.00);
+    Local<Array> samples = Nan::New<Array>();
     Local<Array> timestamps = Nan::New<Array>();
     
     uint32_t count = node->GetSamplesCount();
