@@ -106,5 +106,11 @@ profile2.export()
 
 ## node-inspector
 
-Cpu profiles can be viewed and heap snapshots may be taken and viewed from the
-profiles panel.
+CPU profiles can be viewed and heap snapshots may be taken and viewed from the
+profiles panel.  The profiles returned are JSONable objects in the `.cpuprofile`
+format that node-inspector's `Profiles` panel loads.
+
+    var serialized = JSON.stringify(cpuProfile, null, 2);
+    require('fs').writeFileSync('myprogram.cpuprofile', serialized, 'utf8');
+
+The `myprogram.cpuprofile` file written can then be loaded into the profiles panel and viewed as a flamechart.
