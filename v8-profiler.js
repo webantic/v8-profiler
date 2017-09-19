@@ -211,7 +211,7 @@ var profiler = {
     if (activeProfiles.indexOf(name) < 0)
       activeProfiles.push(name)
 
-    startTime = Date.now();
+    startTime = Date.now() / 1000;
     binding.cpu.startProfiling(name, recsamples);
   },
 
@@ -221,7 +221,7 @@ var profiler = {
       return;
 
     var profile = binding.cpu.stopProfiling(name);
-    endTime = Date.now();
+    endTime = Date.now() / 1000;
     profile.__proto__ = CpuProfile.prototype;
     if (!profile.startTime) profile.startTime = startTime;
     if (!profile.endTime) profile.endTime = endTime;
