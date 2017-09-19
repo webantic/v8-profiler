@@ -54,6 +54,8 @@ namespace nodex {
     Local<Object> heapProfiler = Nan::New<Object>();
     Local<Object> snapshots = Nan::New<Object>();
 
+    Nan::SetMethod(heapProfiler, "increaseHeapLimit", HeapProfiler::IncreaseHeapLimit);
+    Nan::SetMethod(heapProfiler, "restoreHeapLimit", HeapProfiler::RestoreHeapLimit);
     Nan::SetMethod(heapProfiler, "takeSnapshot", HeapProfiler::TakeSnapshot);
     Nan::SetMethod(heapProfiler, "startTrackingHeapObjects", HeapProfiler::StartTrackingHeapObjects);
     Nan::SetMethod(heapProfiler, "stopTrackingHeapObjects", HeapProfiler::StopTrackingHeapObjects);
@@ -64,6 +66,18 @@ namespace nodex {
 
     Snapshot::snapshots.Reset(snapshots);
     target->Set(Nan::New<String>("heap").ToLocalChecked(), heapProfiler);
+  }
+
+  NAN_METHOD(HeapProfiler::IncreaseHeapLimit) {
+#if (NODE_MODULE_VERSION > 0x0038)
+    v8::Isolate::GetCurrent()->IncreaseHeapLimitForDebugging();
+#endif
+  }
+
+  NAN_METHOD(HeapProfiler::RestoreHeapLimit) {
+#if (NODE_MODULE_VERSION > 0x0038)
+    v8::Isolate::GetCurrent()->RestoreOriginalHeapLimit();
+#endif
   }
 
   NAN_METHOD(HeapProfiler::TakeSnapshot) {
